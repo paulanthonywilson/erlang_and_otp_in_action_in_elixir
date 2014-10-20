@@ -46,18 +46,38 @@ defmodule Rpc.Server do
   end
 
 
-  def handle_info({:tcp, _socket, rawdata}, state) do
-    IO.puts rawdata
-    # do_rpc(socket, rawdata)
+  def handle_info({:tcp, socket, rawdata}, state) do
+    do_rpc(socket, rawdata)
     request_count = state.request_count
     {:noreply, Map.put(state, :request_count, request_count + 1)}
   end
 
 
   def handle_info(:timeout, state = %State{lsock: lsock}) do
-    IO.puts "Timeout #{state |> inspect}"
     {:ok, _sock} = :gen_tcp.accept(lsock)
     {:noreply, state}
+  end
+
+
+  defp do_rpc(socket, rawdata) do
+    try do
+      rawdata
+        |> List.to_string
+        |> String.strip
+        |> Code.eval_string
+        |> send_result_to_socket(socket)
+    rescue
+      e -> 
+        e |> reply_on_socket(socket)
+    end
+  end
+
+  defp send_result_to_socket({result, _binding}, socket) do
+    result |> reply_on_socket(socket)
+  end
+
+  defp reply_on_socket(reply, socket) do
+    :gen_tcp.send(socket, "#{reply |> inspect}\n")
   end
 
 end
