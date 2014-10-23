@@ -18,6 +18,7 @@ defmodule Rpc.Server do
   ###
   # API
   def start_link(port \\ @default_port) do
+    IO.puts "start_link"
     GenServer.start_link __MODULE__, port, name: @server
   end
 

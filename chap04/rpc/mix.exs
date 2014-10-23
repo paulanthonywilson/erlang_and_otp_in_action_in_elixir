@@ -3,17 +3,18 @@ defmodule Rpc.Mixfile do
 
   def project do
     [app: :rpc,
-     version: "0.0.1",
-     elixir: "~> 1.0",
-     deps: deps]
+      version: "0.1.0",
+      elixir: "~> 1.0",
+      deps: deps]
   end
 
   # Configuration for the OTP application
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger],
-     mod: {Rpc, []}]
+    [description: 'RPC server for Erlang and OTP in Action, translated to Elixir',
+      applications: [:logger],
+      mod: {Rpc, []}]
   end
 
   # Dependencies can be Hex packages:
