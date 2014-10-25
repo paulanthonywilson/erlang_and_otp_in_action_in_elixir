@@ -18,7 +18,6 @@ defmodule Rpc.Server do
   ###
   # API
   def start_link(port \\ @default_port) do
-    IO.puts "start_link"
     GenServer.start_link __MODULE__, port, name: @server
   end
 
@@ -33,10 +32,10 @@ defmodule Rpc.Server do
   end
 
   def init(port) do
-    IO.puts "Init #{port}"
     {:ok, lsock} = :gen_tcp.listen(port, [active: true])
     {:ok, %State{port: port, lsock: lsock}, 0}
   end
+
 
   def handle_call(:get_count, _from, state) do
     {:reply, state.request_count, state}
