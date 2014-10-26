@@ -6,7 +6,7 @@ defmodule SimpleCache.Sup do
   ###
   # API functions
   def start_link do
-    Supervisor.start_link(@server, __MODULE__, [])
+    Supervisor.start_link(__MODULE__, :ok, [name: @server])
   end
 
 
@@ -16,7 +16,7 @@ defmodule SimpleCache.Sup do
 
   ###
   # OTP callbacks
-  def init(_supervisor) do
+  def init(:ok) do
     element = {:simple_cache_element, {SimpleCache.Element, :start_link, []}, :temporary, :brutal_kill, :worker, [SimpleCache.Element]}
     children = [element]
     restart_strategy = {:simple_one_for_one, 0, 1}
