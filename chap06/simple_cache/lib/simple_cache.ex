@@ -3,21 +3,10 @@ defmodule SimpleCache do
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
-  def start(type, args) do
-    # import Supervisor.Spec, warn: false
-    #
-    # children = [
-    #   # Define workers and child supervisors to be supervised
-    #   # worker(SimpleCache.Worker, [arg1, arg2, arg3])
-    # ]
-    #
-    # # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # # for other strategies and supported options
-    # opts = [strategy: :one_for_one, name: SimpleCache.Supervisor]
-    # Supervisor.start_link(children, opts)
-    IO.puts {type, args} |> inspect
+  def start(_type, _args) do
+    SimpleCache.Store.init
     case SimpleCache.Sup.start_link do
-      success = {:ok, pid} -> success
+      success = {:ok, _pid} -> success
       failure -> {:error, failure}
     end
   end
