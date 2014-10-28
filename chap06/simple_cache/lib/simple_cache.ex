@@ -15,6 +15,7 @@ defmodule SimpleCache do
 
 
   def lookup(key) do
+    # I'm a bit uncomfortable with this error handling strategy
     try do
       {:ok, pid} = SimpleCache.Store.lookup(key)
       {:ok, value} = SimpleCache.Element.fetch(pid)
