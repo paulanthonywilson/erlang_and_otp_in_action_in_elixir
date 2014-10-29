@@ -20,6 +20,11 @@ defmodule SimpleCache do
       {:ok, pid} = SimpleCache.Store.lookup(key)
       {:ok, value} = SimpleCache.Element.fetch(pid)
       {:ok, value}
+    catch
+      # Ok, seem to need to catch exit in the case of a delete immediately followed by a lookup:
+      # timing is such that the pid is returned from the store, but the element process terminates
+      # before the OTP fetch call is processed
+      :exit, _ ->  {:error, :not_found}
     rescue
       _ ->
       {:error, :not_found}
