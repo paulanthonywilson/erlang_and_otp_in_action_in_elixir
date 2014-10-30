@@ -23,7 +23,7 @@ defmodule SimpleCache.Element do
   end
 
   def delete(pid) do
-    GenServer.cast(pid, :delete)
+    GenServer.call(pid, :delete)
   end
 
 
@@ -48,7 +48,8 @@ defmodule SimpleCache.Element do
     {:noreply, Map.put(state, :value, value), time_left(state.start_time, state.lease_time)}
   end
 
-  def handle_cast(:delete, state) do
+  def handle_call(:delete, _from, state) do
+    # changing this to a call doesn't work, as terminate is still async
     {:stop, :normal, state}
   end
 
