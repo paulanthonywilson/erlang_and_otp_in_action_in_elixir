@@ -21,4 +21,5 @@ defmodule SimpleCache.Store do
   def delete(pid) do
     :ets.match_delete(@tableid, {:_, pid})
   end
+
 end

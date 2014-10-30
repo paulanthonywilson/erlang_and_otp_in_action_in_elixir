@@ -34,7 +34,11 @@ defmodule SimpleCache do
 
   def delete(key) do
     case SimpleCache.Store.lookup(key) do
-      {:ok, pid} -> SimpleCache.Element.delete pid
+      {:ok, pid} ->
+        SimpleCache.Element.delete pid
+        # Delete here, as well as in Element.terminate callback. This ensures deletion from the store here
+        # but there's still a potential race condition in timeout
+        SimpleCache.Store.delete pid
       {:error, _reason} -> :ok
     end
   end
@@ -50,3 +54,4 @@ defmodule SimpleCache do
   end
 
 end
+
