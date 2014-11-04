@@ -49,8 +49,10 @@ defmodule SimpleCache.Element do
   end
 
   def handle_call(:delete, _from, state) do
-    # changing this to a call doesn't work, as terminate is still async
-    {:stop, :normal, state}
+    # Ok, this now works for the case of a delete through the API.
+    # I still think there's an unlikley (and hard to reproduce) potential race condition
+    # If a timeout occurs during a lookup
+    {:stop, :normal, :ok, state}
   end
 
   def handle_info(:timeout, state) do
