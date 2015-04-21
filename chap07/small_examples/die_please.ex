@@ -21,8 +21,8 @@ defmodule DiePlease do
     {:noreply, state}
   end
 
-  def handle_info(timeout, state) do
-    :i_want_to_die = :right_now # causes exception
+  def handle_info(_timeout, state) do
+    :i_want_to_die = :right_now # causes exception, warns on compilation
     {:noreply, state}
   end
 
