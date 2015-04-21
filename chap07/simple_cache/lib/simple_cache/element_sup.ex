@@ -21,6 +21,6 @@ defmodule SimpleCache.ElementSup do
     children = [element]
     restart_strategy = {:simple_one_for_one, 0, 1}
     {:ok, {restart_strategy, children}}
-
   end
+
 end

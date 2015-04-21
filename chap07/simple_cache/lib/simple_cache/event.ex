@@ -1,5 +1,4 @@
 defmodule SimpleCache.Event do
-  use GenEvent
 
   @name __MODULE__
 
@@ -24,10 +23,10 @@ defmodule SimpleCache.Event do
   end
 
   def replace(key, value) do
-    GenEvent.replace(@name, {:replace, {key, value}})
+    GenEvent.notify(@name, {:replace, {key, value}})
   end
 
   def delete(key) do
-    GenEvent.replace(@name, {:delete, key})
+    GenEvent.notify(@name, {:delete, key})
   end
 end

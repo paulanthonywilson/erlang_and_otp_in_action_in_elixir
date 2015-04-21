@@ -26,7 +26,6 @@ defmodule SimpleCache.Element do
     GenServer.cast(pid, :delete)
   end
 
-
   ###
   # OTP - callback via supervisor
   def start_link(value, lease_time) do
@@ -62,7 +61,6 @@ defmodule SimpleCache.Element do
     :ok
   end
 
-
   defp time_left(_start_time, :infinity) do
     :infinity
   end
@@ -74,7 +72,6 @@ defmodule SimpleCache.Element do
       time -> time * 1000
     end
   end
-
 
   defp now_in_gregorian_seconds do
     :calendar.local_time |> :calendar.datetime_to_gregorian_seconds
