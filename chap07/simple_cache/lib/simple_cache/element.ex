@@ -11,7 +11,7 @@ defmodule SimpleCache.Element do
   ###
   # API
   def create(value, lease_time \\ @default_lease_time) do
-    SimpleCache.Sup.start_child(value, lease_time)
+    SimpleCache.ElementSup.start_child(value, lease_time)
   end
 
   def fetch(pid) do
